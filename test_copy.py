@@ -123,5 +123,15 @@ def find_average(url, name):
 
 
 
-print(all_teams())
+#print(all_teams())
+response = requests.get('https://www.sports-reference.com/cbb/schools/ohio-state/men/2023-gamelogs.html')
+soup = BeautifulSoup(response.text, 'html.parser')
+basicTable = soup.find('table', {'id': 'sgl-basic_NCAAM'})
+#print(basicTable)
+#for i, item in enumerate(basicTable):
+for i, item in enumerate(basicTable.contents[7].contents):
+    if (str(item).__contains__('pts') and not str(item).__contains__('aria-label')):
+        print("Child " + str(i) + ":")
+        print(item)
+        print()
 

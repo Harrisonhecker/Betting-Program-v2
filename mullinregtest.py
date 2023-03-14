@@ -40,13 +40,17 @@ x = [
     [104.3, 87.0, 9.0, 0.214, 0.536, 14, 10],
     [121.7, 103.3, 10.0, 0.357, 0.48, 14, 20],
     [120.0, 129.2, 1.0, 0.44, 0.483, 25, 12], 
-    [98.5, 86.4, 4.0, 0.462, 0.523, 13, 20]  
+    [98.5, 86.4, 4.0, 0.462, 0.523, 13, 20],
+    [114.1, 107.8, -3.0, 0.389, 0.492, 18, 59],
+    [109.7, 93.5, 0.0, 0.526, 0.446, 19, 56],
+    [101.5, 123.1, -11.0, 0.417, 0.423, 24, 52]  
+
 ]
 # opponent points scored
-y = [53, 56, 43, 88, 53, 73, 81, 59, 66, 89, 61, 59, 57, 71, 80, 70, 68, 63, 77, 69, 86, 65, 77, 69, 62, 92, 82, 75, 60, 62, 84, 57]
+#y = [53, 56, 43, 88, 53, 73, 81, 59, 66, 89, 61, 59, 57, 71, 80, 70, 68, 63, 77, 69, 86, 65, 77, 69, 62, 92, 82, 75, 60, 62, 84, 57, 69, 58, 80]
 
 # osu points scored
-#y = [91, 82, 65, 77, 81, 80, 72, 96, 67, 84, 95, 90, 73, 69, 73, 67, 64, 60, 93, 60, 70, 60, 69, 63, 41, 75, 55, 71, 72, 73, 78, 65]
+y = [91, 82, 65, 77, 81, 80, 72, 96, 67, 84, 95, 90, 73, 69, 73, 67, 64, 60, 93, 60, 70, 60, 69, 63, 41, 75, 55, 71, 72, 73, 78, 65, 73, 68, 66]
 x, y = np.array(x), np.array(y)
 
 
@@ -57,18 +61,18 @@ r_sq = model.score(x,y)
 
 print("coefficient of determination: " + str(r_sq) + "\n")
 
-print("intercept: " + str(model.intercept_))
-print("slope: " + str(model.coef_) + "\n")
+#print("intercept: " + str(model.intercept_))
+#print("slope: " + str(model.coef_) + "\n")
 
 y_pred = model.predict(x)
-print("predicted response: " + str(y_pred) + "\n")
+#print("predicted response: " + str(y_pred) + "\n")
 
 y_pred = model.intercept_ + np.sum(model.coef_ * x, axis=1)
 #print("predicted response: " + str(y_pred) + "\n")
 
 #x_new = np.arange(10).reshape((-1, 2))
 x_new = np.array([
-                  [109.1, 103.3, 3.5, .360, .463, 18.4, 15.8]
+                  [109.2, 103.9, 2.8, .368, .462, 18.6, 15.6]
                   ]).reshape((-1, 7))
 y_new = model.predict(x_new)
 print("predicted response (new): " + str(y_new) + "\n")
