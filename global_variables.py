@@ -6,8 +6,9 @@ ADVANCED_GAME_LOG_POST_STRING = '/men/'+ YEAR + '-gamelogs-advanced.html'
 
 ADVANCED_TABLE_ID = 'sgl-advanced'
 BASIC_TABLE_ID = 'sgl-basic_NCAAM'
-OFF_RATING_ID = 'data-stat="off_rtg"'
-DEF_RATING_ID = 'data-stat="def_rtg"'
+
+
+# Basic Table Stats (Home)
 POINTS_ID = 'data-stat="pts"'
 FGS_ID = 'data-stat="fg"'
 FG_ATTEMPTS_ID = 'data-stat="fga"'
@@ -26,8 +27,44 @@ BLOCKS_ID = 'data-stat="blk"'
 TURNOVERS_ID = 'data-stat="tov"'
 PERSONAL_FOULS_ID = 'data-stat="pf"'
 
+# Basic Table Stats (Opponent)
+OPP_POINTS_ID = 'data-stat="opp_pts"'
+OPP_FGS_ID = 'data-stat="opp_fg"'
+OPP_FG_ATTEMPTS_ID = 'data-stat="opp_fga"'
+OPP_FG_PERCENT_ID = 'data-stat="opp_fg_pct"'
+OPP_THREE_POINT_ID = 'data-stat="opp_fg3"'
+OPP_THREE_POINT_ATTEMPTS_ID = 'data-stat="opp_fg3a"'
+OPP_THREE_POINT_PERCENT_ID = 'data-stat="opp_fg3_pct"'
+OPP_FT_ID = 'data-stat="opp_ft"'
+OPP_FT_ATTEMPT_ID = 'data-stat="opp_fta"'
+OPP_FT_PERCENT_ID = 'data-stat="opp_ft_pct"'
+OPP_OFF_REBOUNDS_ID = 'data-stat="opp_orb"'
 OPP_TOTAL_REBOUNDS_ID = 'data-stat="opp_trb"'
+OPP_ASSISTS_ID = 'data-stat="opp_ast"'
+OPP_STEALS_ID = 'data-stat="opp_stl"'
+OPP_BLOCKS_ID = 'data-stat="opp_blk"'
+OPP_TURNOVERS_ID = 'data-stat="opp_tov"'
+OPP_PERSONAL_FOULS_ID = 'data-stat="opp_pf"'
 
+# Advanced Table Stats
+OFF_RATING_ID = 'data-stat="off_rtg"'
+DEF_RATING_ID = 'data-stat="def_rtg"'
+PACE_ID = 'data-stat="pace"'
+FT_ATTEMPT_RATE_ID = 'data-stat="fta_per_fga_pct"'
+THREE_POINT_ATTEMPT_RATE_ID = 'data-stat="fg3a_per_fga_pct"'
+TRUE_SHOOTING_PERCENT_ID = 'data-stat="ts_pct"'
+TOTAL_REBOUND_PERCENT_ID = 'data-stat="trb_pct"'
+ASSIST_PERCENT_ID = 'data-stat="ast_pct"'
+STEAL_PERCENT_ID = 'data-stat="stl_pct"'
+BLOCK_PERCENT_ID = 'data-stat="blk_pct"'
+OFF_EFG_PERCENT_ID = 'data-stat="efg_pct"'
+OFF_TOV_PERCENT_ID = 'data-stat="tov_pct"'
+OFF_ORB_PERCENT_ID = 'data-stat="orb_pct"'
+OFF_FT_PER_FGA_ID = 'data-stat="ft_rate"'
+OPP_EFG_PERCENT_ID = 'data-stat="opp_efg_pct"'
+OPP_TOV_PERCENT_ID = 'data-stat="opp_tov_pct"'
+OPP_DRB_PERCENT_ID = 'data-stat="drb_pct"'
+OPP_FT_PER_FGA_ID = 'data-stat="opp_ft_rate"'
 
 
 

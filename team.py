@@ -5,106 +5,82 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 class Team:
-    '''
-    # Stats for multiple linear regression
-    __off_rating_column = []
-    __def_rating_column = []
-    __rebound_diff_column = []
-    __3P_attempts_column = []
-    __3P_percent_column = []
-    __FG_attempts_column = []
-    __FG_percent_column = []
 
-    # Other Stats
-    __points_column = []
-    __FGs_column = []
-    __3Ps_column = []
-    __FTs_column = []
-    __FT_attempts_column = []
-    __FT_percent_column = []
-    __off_rebounds_column = []
-    __def_rebounds_column = []
-    __total_rebounds_column = []
-    __opp_total_rebounds_column = []
-    __assists_column = []
-    __steals_column = []
-    __blocks_column = []
-    __turnovers_column = []
-    __PFs_column = []
-    __current_off_rating = None
-    __current_def_rating = None
-
-    # Average stats
-    __avg_FGs = None
-    __avg_FG_attempts = None
-    __avg_FG_percent = None
-    __avg_3Ps = None
-    __avg_3P_attempts = None
-    __avg_3P_percent = None
-    __avg_FTs = None
-    __avg_FT_attempts = None
-    __avg_FT_percent = None
-    __avg_off_rebounds = None
-    __avg_def_rebounds = None
-    __avg_total_rebounds = None
-    __avg_steals = None
-    __avg_blocks = None
-    __avg_turnovers = None
-    __avg_PFs = None
-    __avg_points = None
-    __avg_rebound_diff = None
-
-    # Links, Parsers, and Tables
-    __basic_game_log_link = None
-    __advanced_game_log_link = None
-    __basic_parser = None
-    __advanced_parser = None
-    __basic_table = None
-    __advanced_table = None
-    __team_name = None
-
-    # Linear Regression Model Variables
-    __regression_model = None
-    __input_training_matrix = None
-    __output_training_array = None
-    __prediction_input_array = None
-    coefficient_of_determination = None
-
-    # Big Cajuna
-    predicted_points = None
-    '''
     # Constructor
     def __init__(self, team_name, off_rating, def_rating):
         
-        # Stats for multiple linear regression
-        self.__off_rating_column = []
-        self.__def_rating_column = []
-        self.__rebound_diff_column = []
-        self.__3P_attempts_column = []
-        self.__3P_percent_column = []
-        self.__FG_attempts_column = []
-        self.__FG_percent_column = []
-
-        # Other Stats
+        # Basic Table Stats (Home)
         self.__points_column = []
         self.__FGs_column = []
+        self.__FG_attempts_column = []
+        self.__FG_percent_column = []
         self.__3Ps_column = []
+        self.__3P_attempts_column = []
+        self.__3P_percent_column = []
         self.__FTs_column = []
         self.__FT_attempts_column = []
         self.__FT_percent_column = []
         self.__off_rebounds_column = []
-        self.__def_rebounds_column = []
         self.__total_rebounds_column = []
-        self.__opp_total_rebounds_column = []
         self.__assists_column = []
         self.__steals_column = []
         self.__blocks_column = []
         self.__turnovers_column = []
         self.__PFs_column = []
+        
+
+        # Basic Table Stats (Opponent)
+        self.__opp_points_column = []
+        self.__opp_FGs_column = []
+        self.__opp_FG_attempts_column = []
+        self.__opp_FG_percent_column = []
+        self.__opp_3Ps_column = []
+        self.__opp_3P_attempts_column = []
+        self.__opp_3P_percent_column = []
+        self.__opp_FTs_column = []
+        self.__opp_FT_attempts_column = []
+        self.__opp_FT_percent_column = []
+        self.__opp_off_rebounds_column = []
+        self.__opp_total_rebounds_column = []
+        self.__opp_assists_column = []
+        self.__opp_steals_column = []
+        self.__opp_blocks_column = []
+        self.__opp_turnovers_column = []
+        self.__opp_PFs_column = []
+
+        # Advanced Table Stats
+        self.__off_rating_column = []
+        self.__def_rating_column = []
+        self.__pace_column = []
+        self.__FT_attempt_rate_column = []
+        self.__3P_attempt_rate_column = []
+        self.__true_shooting_percent_column = []
+        self.__total_rebound_percent_column = []
+        self.__assist_percent_column = []
+        self.__steal_percent_column = []
+        self.__block_percent_column = []
+        self.__off_efg_percent_column = []
+        self.__off_tov_percent_column = []
+        self.__off_orb_percent_column = []
+        self.__off_ft_per_fga_column = []
+        self.__opp_efg_percent_column = []
+        self.__opp_tov_percent_column = []
+        self.__opp_drb_percent_column = []
+        self.__opp_ft_per_fga_column = []
+
+        
+        # Other Stats
+        self.__rebound_diff_column = []
+        self.__def_rebounds_column = []
+        self.__opp_rebound_diff_column = []
+        self.__opp_def_rebounds_column = []
+        
+        
         self.__current_off_rating = None
         self.__current_def_rating = None
 
         # Average stats
+        self.avg_points = None
         self.__avg_FGs = None
         self.__avg_FG_attempts = None
         self.__avg_FG_percent = None
@@ -115,14 +91,52 @@ class Team:
         self.__avg_FT_attempts = None
         self.__avg_FT_percent = None
         self.__avg_off_rebounds = None
-        self.__avg_def_rebounds = None
         self.__avg_total_rebounds = None
         self.__avg_steals = None
         self.__avg_blocks = None
         self.__avg_turnovers = None
         self.__avg_PFs = None
-        self.avg_points = None
+
+        self.opp_avg_points = None
+        self.__opp_avg_FGs = None
+        self.__opp_avg_FG_attempts = None
+        self.__opp_avg_FG_percent = None
+        self.__opp_avg_3Ps = None
+        self.__opp_avg_3P_attempts = None
+        self.__opp_avg_3P_percent = None
+        self.__opp_avg_FTs = None
+        self.__opp_avg_FT_attempts = None
+        self.__opp_avg_FT_percent = None
+        self.__opp_avg_off_rebounds = None
+        self.__opp_avg_total_rebounds = None
+        self.__opp_avg_steals = None
+        self.__opp_avg_blocks = None
+        self.__opp_avg_turnovers = None
+        self.__opp_avg_PFs = None
+
+        self.__avg_off_rating = None
+        self.__avg_def_rating = None
+        self.__avg_pace = None
+        self.__avg_ft_attempt_rate = None
+        self.__avg_three_point_attempt_rate = None
+        self.__avg_true_shooting_percent = None
+        self.__avg_total_rebound_percent = None
+        self.__avg_assist_percent = None
+        self.__avg_steal_percent = None
+        self.__avg_block_percent = None
+        self.__avg_off_efg_percent = None
+        self.__avg_off_tov_percent = None
+        self.__avg_off_orb_percent = None
+        self.__avg_off_ft_per_fga_percent = None
+        self.__avg_def_efg_percent = None
+        self.__avg_def_tov_percent = None
+        self.__avg_def_drb_percent = None
+        self.__avg_def_ft_per_fga_percent = None
+        
         self.__avg_rebound_diff = None
+        self.__avg_def_rebounds = None
+        self.__opp_avg_rebound_diff = None
+        self.__opp_avg_def_rebounds = None
 
         # Links, Parsers, and Tables
         self.__basic_game_log_link = None
@@ -199,59 +213,122 @@ class Team:
         for i, item in enumerate(items.contents):
 
             if (not str(item).__contains__('aria-label') and item.text != ''):
-                if (str(item).__contains__(OFF_RATING_ID) ):
-                    self.__off_rating_column.append(float(item.text))
-                if (str(item).__contains__(DEF_RATING_ID)):
-                    self.__def_rating_column.append(float(item.text))
-
-                if (str(item).__contains__(TOTAL_REBOUNDS_ID)):
-                    self.__total_rebounds_column.append(float(item.text))
-                if (str(item).__contains__(OPP_TOTAL_REBOUNDS_ID)):
-                    self.__opp_total_rebounds_column.append(float(item.text))
-
-                if (str(item).__contains__(THREE_POINT_ID)):
-                    self.__3Ps_column.append(float(item.text))
-                if (str(item).__contains__(THREE_POINT_ATTEMPTS_ID)):
-                    self.__3P_attempts_column.append(float(item.text))
-                if (str(item).__contains__(THREE_POINT_PERCENT_ID)):
-                    self.__3P_percent_column.append(float(item.text))
-
+                
+                # Basic table stats (home)
+                if (str(item).__contains__(POINTS_ID) and is_basic_table_flag):
+                    self.__points_column.append(float(item.text))               
                 if (str(item).__contains__(FGS_ID)):
                     self.__FGs_column.append(float(item.text))
                 if (str(item).__contains__(FG_ATTEMPTS_ID)):
                     self.__FG_attempts_column.append(float(item.text))
                 if (str(item).__contains__(FG_PERCENT_ID)):
-                    self.__FG_percent_column.append(float(item.text))
-                
-                if (str(item).__contains__(POINTS_ID) and is_basic_table_flag):
-                    self.__points_column.append(float(item.text))
-
+                    self.__FG_percent_column.append(float(item.text))             
+                if (str(item).__contains__(THREE_POINT_ID)):
+                    self.__3Ps_column.append(float(item.text))
+                if (str(item).__contains__(THREE_POINT_ATTEMPTS_ID)):
+                    self.__3P_attempts_column.append(float(item.text))
+                if (str(item).__contains__(THREE_POINT_PERCENT_ID)):
+                    self.__3P_percent_column.append(float(item.text))             
                 if (str(item).__contains__(FT_ID)):
                     self.__FTs_column.append(float(item.text))
                 if (str(item).__contains__(FT_ATTEMPT_ID)):
                     self.__FT_attempts_column.append(float(item.text))
                 if (str(item).__contains__(FT_PERCENT_ID)):
-                    self.__FT_percent_column.append(float(item.text))            
-                
+                    self.__FT_percent_column.append(float(item.text)) 
                 if (str(item).__contains__(OFF_REBOUNDS_ID)):
                     self.__off_rebounds_column.append(float(item.text))
-
+                if (str(item).__contains__(TOTAL_REBOUNDS_ID)):
+                    self.__total_rebounds_column.append(float(item.text))
                 if (str(item).__contains__(ASSISTS_ID)):
                     self.__assists_column.append(float(item.text))
-
                 if (str(item).__contains__(STEALS_ID)):
                     self.__steals_column.append(float(item.text))
-                
                 if (str(item).__contains__(BLOCKS_ID)):
                     self.__blocks_column.append(float(item.text))
-                
                 if (str(item).__contains__(TURNOVERS_ID)):
                     self.__turnovers_column.append(float(item.text))
-                
                 if (str(item).__contains__(PERSONAL_FOULS_ID)):
                     self.__PFs_column.append(float(item.text))
 
+                
+                # Basic table stats (opponent)
+                if (str(item).__contains__(OPP_POINTS_ID) and is_basic_table_flag):
+                    self.__opp_points_column.append(float(item.text))               
+                if (str(item).__contains__(OPP_FGS_ID)):
+                    self.__opp_FGs_column.append(float(item.text))
+                if (str(item).__contains__(OPP_FG_ATTEMPTS_ID)):
+                    self.__opp_FG_attempts_column.append(float(item.text))
+                if (str(item).__contains__(OPP_FG_PERCENT_ID)):
+                    self.__opp_FG_percent_column.append(float(item.text))             
+                if (str(item).__contains__(OPP_THREE_POINT_ID)):
+                    self.__opp_3Ps_column.append(float(item.text))
+                if (str(item).__contains__(OPP_THREE_POINT_ATTEMPTS_ID)):
+                    self.__opp_3P_attempts_column.append(float(item.text))
+                if (str(item).__contains__(OPP_THREE_POINT_PERCENT_ID)):
+                    self.__opp_3P_percent_column.append(float(item.text))             
+                if (str(item).__contains__(OPP_FT_ID)):
+                    self.__opp_FTs_column.append(float(item.text))
+                if (str(item).__contains__(OPP_FT_ATTEMPT_ID)):
+                    self.__opp_FT_attempts_column.append(float(item.text))
+                if (str(item).__contains__(OPP_FT_PERCENT_ID)):
+                    self.__opp_FT_percent_column.append(float(item.text)) 
+                if (str(item).__contains__(OPP_OFF_REBOUNDS_ID)):
+                    self.__opp_off_rebounds_column.append(float(item.text))
+                if (str(item).__contains__(OPP_TOTAL_REBOUNDS_ID)):
+                    self.__opp_total_rebounds_column.append(float(item.text))
+                if (str(item).__contains__(OPP_ASSISTS_ID)):
+                    self.__opp_assists_column.append(float(item.text))
+                if (str(item).__contains__(OPP_STEALS_ID)):
+                    self.__opp_steals_column.append(float(item.text))
+                if (str(item).__contains__(OPP_BLOCKS_ID)):
+                    self.__opp_blocks_column.append(float(item.text))
+                if (str(item).__contains__(OPP_TURNOVERS_ID)):
+                    self.__opp_turnovers_column.append(float(item.text))
+                if (str(item).__contains__(OPP_PERSONAL_FOULS_ID)):
+                    self.__opp_PFs_column.append(float(item.text))
+
+                # Advanced table stats
+                if (str(item).__contains__(OFF_RATING_ID) ):
+                    self.__off_rating_column.append(float(item.text))
+                if (str(item).__contains__(DEF_RATING_ID)):
+                    self.__def_rating_column.append(float(item.text))
+                if (str(item).__contains__(PACE_ID)):
+                    self.__pace_column.append(float(item.text))
+                if (str(item).__contains__(FT_ATTEMPT_RATE_ID)):
+                    self.__FT_attempt_rate_column.append(float(item.text))
+                if (str(item).__contains__(THREE_POINT_ATTEMPT_RATE_ID)):
+                    self.__3P_attempt_rate_column.append(float(item.text))
+                if (str(item).__contains__(TRUE_SHOOTING_PERCENT_ID)):
+                    self.__true_shooting_percent_column.append(float(item.text))
+                if (str(item).__contains__(TOTAL_REBOUND_PERCENT_ID)):
+                    self.__total_rebound_percent_column.append(float(item.text))
+                if (str(item).__contains__(ASSIST_PERCENT_ID)):
+                    self.__assist_percent_column.append(float(item.text))
+                if (str(item).__contains__(STEAL_PERCENT_ID)):
+                    self.__steal_percent_column.append(float(item.text))
+                if (str(item).__contains__(BLOCK_PERCENT_ID)):
+                    self.__block_percent_column.append(float(item.text))
+                if (str(item).__contains__(OFF_EFG_PERCENT_ID)):
+                    self.__off_efg_percent_column.append(float(item.text))
+                if (str(item).__contains__(OFF_TOV_PERCENT_ID)):
+                    self.__off_tov_percent_column.append(float(item.text))
+                if (str(item).__contains__(OFF_ORB_PERCENT_ID)):
+                    self.__off_orb_percent_column.append(float(item.text))
+                if (str(item).__contains__(OFF_FT_PER_FGA_ID)):
+                    self.__off_ft_per_fga_column.append(float(item.text))
+                if (str(item).__contains__(OPP_EFG_PERCENT_ID)):
+                    self.__opp_efg_percent_column.append(float(item.text))
+                if (str(item).__contains__(OPP_TOV_PERCENT_ID)):
+                    self.__opp_tov_percent_column.append(float(item.text))
+                if (str(item).__contains__(OPP_DRB_PERCENT_ID)):
+                    self.__opp_drb_percent_column.append(float(item.text))
+                if (str(item).__contains__(OPP_FT_PER_FGA_ID)):
+                    self.__opp_ft_per_fga_column.append(float(item.text))
+
     def __compute_averages(self):
+        
+        # Basic table stats (home)
+        self.avg_points = np.mean(self.__points_column)
         self.__avg_FGs = np.mean(self.__FGs_column)
         self.__avg_FG_attempts = np.mean(self.__FG_attempts_column)
         self.__avg_FG_percent = np.mean(self.__FG_percent_column)
@@ -268,22 +345,63 @@ class Team:
         self.__avg_blocks = np.mean(self.__blocks_column)
         self.__avg_turnovers = np.mean(self.__turnovers_column)
         self.__avg_PFs = np.mean(self.__PFs_column)
-        self.avg_points = np.mean(self.__points_column)
+
+        # Basic table stats (opponent)
+        self.opp_avg_points = np.mean(self.__opp_points_column)
+        self.__opp_avg_FGs = np.mean(self.__opp_FGs_column)
+        self.__opp_avg_FG_attempts = np.mean(self.__opp_FG_attempts_column)
+        self.__opp_avg_FG_percent = np.mean(self.__opp_FG_percent_column)
+        self.__opp_avg_3Ps = np.mean(self.__opp_3Ps_column)
+        self.__opp_avg_3P_attempts = np.mean(self.__opp_3P_attempts_column)
+        self.__opp_avg_3P_percent = np.mean(self.__opp_3P_percent_column)
+        self.__opp_avg_FTs = np.mean(self.__opp_FTs_column)
+        self.__opp_avg_FT_attempts = np.mean(self.__opp_FT_attempts_column)
+        self.__opp_avg_FT_percent = np.mean(self.__opp_FT_percent_column)
+        self.__opp_avg_off_rebounds = np.mean(self.__opp_off_rebounds_column)
+        self.__opp_avg_def_rebounds = np.mean(self.__opp_def_rebounds_column)
+        self.__opp_avg_total_rebounds = np.mean(self.__opp_total_rebounds_column)
+        self.__opp_avg_steals = np.mean(self.__opp_steals_column)
+        self.__opp_avg_blocks = np.mean(self.__opp_blocks_column)
+        self.__opp_avg_turnovers = np.mean(self.__opp_turnovers_column)
+        self.__opp_avg_PFs = np.mean(self.__opp_PFs_column)
+
+        # Advanced table stats 
+        self.__avg_off_rating = np.mean(self.__off_rating_column)
+        self.__avg_def_rating = np.mean(self.__def_rating_column)
+        self.__avg_pace = np.mean(self.__pace_column)
+        self.__avg_ft_attempt_rate = np.mean(self.__FT_attempt_rate_column)
+        self.__avg_three_point_attempt_rate = np.mean(self.__3P_attempt_rate_column)
+        self.__avg_true_shooting_percent = np.mean(self.__true_shooting_percent_column)
+        self.__avg_total_rebound_percent = np.mean(self.__total_rebound_percent_column)
+        self.__avg_assist_percent = np.mean(self.__assist_percent_column)
+        self.__avg_steal_percent = np.mean(self.__steal_percent_column)
+        self.__avg_block_percent = np.mean(self.__block_percent_column)
+        self.__avg_off_efg_percent = np.mean(self.__off_efg_percent_column)
+        self.__avg_off_tov_percent = np.mean(self.__off_tov_percent_column)
+        self.__avg_off_orb_percent = np.mean(self.__off_orb_percent_column)
+        self.__avg_off_ft_per_fga_percent = np.mean(self.__off_ft_per_fga_column)
+        self.__avg_def_efg_percent = np.mean(self.__opp_efg_percent_column)
+        self.__avg_def_tov_percent = np.mean(self.__opp_tov_percent_column)
+        self.__avg_def_drb_percent = np.mean(self.__opp_drb_percent_column)
+        self.__avg_def_ft_per_fga_percent = np.mean(self.__opp_ft_per_fga_column)
+
         self.__avg_rebound_diff = np.mean(self.__rebound_diff_column)
+        self.__opp_avg_rebound_diff = np.mean(self.__opp_rebound_diff_column)
+        self.__avg_def_rebounds = np.mean(self.__def_rebounds_column)
+        self.__opp_avg_def_rebounds = np.mean(self.__opp_avg_def_rebounds)
 
     def __populate_rebounds(self):
         for i, item in enumerate(self.__total_rebounds_column):
 
-            #print(self.__opp_total_rebounds_column)
-            #print(self.__off_rebounds_column)
             self.__rebound_diff_column.append(item - self.__opp_total_rebounds_column[i])
-
             self.__def_rebounds_column.append(item - self.__off_rebounds_column[i])
+            self.__opp_rebound_diff_column.append(self.__opp_total_rebounds_column[i] - item)
+            self.__opp_def_rebounds_column.append(self.__opp_total_rebounds_column[i] - self.__opp_off_rebounds_column[i])
         
     def __init_regression_model(self):
 
-        # Create input training matrix
-        '''print(str(self.__off_rating_column.__len__()))
+        '''# Create input training matrix
+        print(str(self.__off_rating_column.__len__()))
         print(str(self.__def_rating_column.__len__()))
         print(str(self.__rebound_diff_column.__len__()))
         print(str(self.__3P_attempts_column.__len__()))
