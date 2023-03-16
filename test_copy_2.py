@@ -1,15 +1,24 @@
 import requests
 import time
 from bs4 import BeautifulSoup
+from team import *
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from team import *
 
+<<<<<<< HEAD
 kansas = Team('kansas')
 howard = Team('howard')
 
 
+=======
+
+
+kansas = Team('kansas')
+howard = Team('howard')
+
+>>>>>>> 28b27f8c7ed1a41f661cb335b933da9c43c5ac82
 print(kansas.avg_points)
 
 
@@ -17,7 +26,35 @@ print(kansas.avg_points)
 
 
 
+<<<<<<< HEAD
 '''
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
+>>>>>>> 28b27f8c7ed1a41f661cb335b933da9c43c5ac82
 def list_teams(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -98,6 +135,13 @@ from global_variables import *
 from matchup import *
 #MULTIPLE LINEAR REGRESSION
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD:test copy 2.py
+>>>>>>> 28b27f8c7ed1a41f661cb335b933da9c43c5ac82
 kansas = Team('kansas', 50, 50)
 howard = Team('howard', 50, 50)
 
@@ -120,7 +164,14 @@ else:
     print('Howard wins')
 
 
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> 79964782c0d7fd42063ef0bdc0fea728f3ce68d7:test_copy_2.py
+'''
+>>>>>>> 485cd7c0c6647044a71ccebf67144cef13a6d4e6
+>>>>>>> 28b27f8c7ed1a41f661cb335b933da9c43c5ac82
 # West Virginia opponent TRB, STL, BLK
 x = [
     [33, 10, 2], 
@@ -166,6 +217,6 @@ def __main__():
     y_new = model.predict(x_new)
     print("predicted response (new): " + str(y_new) + "\n")
 
-    
+'''    
 
 '''

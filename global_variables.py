@@ -6,7 +6,7 @@ ADVANCED_GAME_LOG_POST_STRING = '/men/'+ YEAR + '-gamelogs-advanced.html'
 SCHEDULE_POST_STRING = '/men/' + YEAR + '-schedule.html'
 
 ADVANCED_TABLE_ID = 'sgl-advanced'
-BASIC_TABLE_ID = 'sgl-basic_M'
+BASIC_TABLE_ID = 'sgl-basic_NCAAM'
 SCHEDULE_TABLE_ID = 'schedule'
 
 
