@@ -25,7 +25,30 @@ def team_one_sos(team_one_name):
 
     for x in body:
         if x.text[0:3] == 'SOS':
-            sos_one = float(x.text[5:9])
+            #sos_one = float(x.text[5:9])
+            start = x.text.index(':')
+            end = x.text.index('(')
+            sos_one = x.text[start+2:end]
+            print(sos_one)
+            print(float(sos_one))
+        if x.text[0:3] == 'SRS':
+            start = x.text.index(':')
+            end = x.text.index('(')
+            sos_two = x.text[start+2:end]
+            print(sos_two)
+            print(float(sos_two))
+        if x.text[0:4] == 'ORtg':
+            start = x.text.index(':')
+            end = x.text.index('(')
+            sos_three = x.text[start+2:end]
+            print(sos_three)
+            print(float(sos_three))
+        if x.text[0:4] == 'DRtg':
+            start = x.text.index(':')
+            end = x.text.index('(')
+            sos_four = x.text[start+2:end]
+            print(sos_four)
+            print(float(sos_four))
     return sos_one
 
 
@@ -62,6 +85,7 @@ from global_variables import *
 from matchup import *
 #MULTIPLE LINEAR REGRESSION
 
+<<<<<<< HEAD:test copy 2.py
 kansas = Team('kansas', 50, 50)
 howard = Team('howard', 50, 50)
 
@@ -84,6 +108,8 @@ else:
     print('Howard wins')
 
 
+=======
+>>>>>>> 79964782c0d7fd42063ef0bdc0fea728f3ce68d7:test_copy_2.py
 '''
 # West Virginia opponent TRB, STL, BLK
 x = [
@@ -104,12 +130,15 @@ x_new = np.array([
                   [35, 4, 8]
                   ]).reshape((-1, 3))
 y_new = model.predict(x_new)
-print("West Virginia Predicted Points: " + str(y_new))
+print("West Virginia Predicted Points: " + str(y_new))'''
 
 
-def main():
+team_one_sos('kansas')
+
+
+def __main__():
     #SINGLE LINEAR REGRESSION
-
+    '''
     #Maryland opponent SOS (Minn, North, OSU)
     x = [8.21, 8.40, 9.71]
 
@@ -125,6 +154,8 @@ def main():
                     [35, 4, 8]
                     ]).reshape((-1, 3))
     y_new = model.predict(x_new)
-    print("predicted response (new): " + str(y_new) + "\n")
+    print("predicted response (new): " + str(y_new) + "\n")'''
+
+    
 
 '''
