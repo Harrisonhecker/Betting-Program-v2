@@ -116,9 +116,43 @@ def main():
 
 
 
+
+
+from team import *
+from global_variables import *
+from matchup import *
 #MULTIPLE LINEAR REGRESSION
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD:test copy 2.py
+kansas = Team('kansas', 50, 50)
+howard = Team('howard', 50, 50)
+
+kansas_points = kansas.avg_points
+time.sleep(2)
+kansas_sos = team_one_sos('kansas')
+time.sleep(2)
+howard_points = howard.avg_points
+time.sleep(2)
+howard_sos = team_two_sos('howard')
+
+kansas_value = kansas_points * kansas_sos
+howard_value = howard_points * howard_sos
+
+print(kansas_value)
+print(howard_value)
+if kansas_value > howard_value:
+    print('Kansas wins')
+else:
+    print('Howard wins')
+
+
+=======
+>>>>>>> 79964782c0d7fd42063ef0bdc0fea728f3ce68d7:test_copy_2.py
+'''
+>>>>>>> 485cd7c0c6647044a71ccebf67144cef13a6d4e6
 # West Virginia opponent TRB, STL, BLK
 x = [
     [33, 10, 2], 
@@ -166,3 +200,4 @@ def __main__():
 
 '''    
 
+'''
