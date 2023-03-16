@@ -1,9 +1,47 @@
 import requests
 import time
 from bs4 import BeautifulSoup
+from team import *
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
+
+
+
+kansas = Team('kansas')
+howard = Team('howard')
+
+print(kansas.avg_points)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 
 def list_teams(url):
     response = requests.get(url)
@@ -66,7 +104,7 @@ def team_two_sos(team_two_name):
     return sos_two
 
 
-'''
+
 def main():
     list_teams('https://www.sports-reference.com/cbb/seasons/men/2023.html')
 
@@ -74,13 +112,13 @@ def main():
     team_two_data = team_two_sos('west-virginia')
     print(f"Maryland SOS: {team_one_data}")
     print(f"West Virginia SOS: {team_two_data}")
-'''
+
 
 
 
 #MULTIPLE LINEAR REGRESSION
 
-'''
+
 # West Virginia opponent TRB, STL, BLK
 x = [
     [33, 10, 2], 
@@ -100,7 +138,7 @@ x_new = np.array([
                   [35, 4, 8]
                   ]).reshape((-1, 3))
 y_new = model.predict(x_new)
-print("West Virginia Predicted Points: " + str(y_new))'''
+print("West Virginia Predicted Points: " + str(y_new))
 
 
 team_one_sos('kansas')
@@ -108,7 +146,7 @@ team_one_sos('kansas')
 
 def __main__():
     #SINGLE LINEAR REGRESSION
-    '''
+
     #Maryland opponent SOS (Minn, North, OSU)
     x = [8.21, 8.40, 9.71]
 
@@ -124,7 +162,7 @@ def __main__():
                     [35, 4, 8]
                     ]).reshape((-1, 3))
     y_new = model.predict(x_new)
-    print("predicted response (new): " + str(y_new) + "\n")'''
+    print("predicted response (new): " + str(y_new) + "\n")
 
-    
+'''    
 

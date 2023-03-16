@@ -178,8 +178,6 @@ class Team:
         self.__init_columns()
         self.__find_current_info()
         self.__compute_averages()
-
-        print(self.opp_sos_column)
         self.__init_regression_model()      
 
     # Initialize parsers and tables
@@ -250,7 +248,7 @@ class Team:
     def __extract_info(self, items, is_basic_table_flag):
         for i, item in enumerate(items.contents):
 
-            if (not str(item).__contains__('aria-label') and item.text != ''):
+            if (not str(item).__contains__('aria-label') and item.text != '' and items.contents[5].text != ''):
                 
                 # Basic table stats (home)
                 if (str(item).__contains__(POINTS_ID) and is_basic_table_flag):
@@ -326,8 +324,11 @@ class Team:
                     self.opp_PFs_column.append(float(item.text))
 
                 if (str(item).__contains__(OPP_TEAM_NAME_ID) and is_basic_table_flag):
-                    sos = SOS_DIC[item.text]
-                    self.opp_sos_column.append(sos)
+                    if (SOS_DIC.keys().__contains__(item.text)):
+                        sos = SOS_DIC[item.text]
+                        self.opp_sos_column.append(sos)
+                    else:
+                        self.opp_sos_column.append(float(0))
 
                 # Advanced table stats
                 if (str(item).__contains__(OFF_RATING_ID) ):
@@ -477,8 +478,8 @@ class Team:
         print(str(self.FG_percent_column.__len__()))'''
 
         '''print(str(self.FGs_column.__len__()))
-        print(str(self.srs_column.__len__()))
-        print(str(self.srs_column))'''
+        print(str(self.opp_sos_column.__len__()))
+        print(str(self.opp_sos_column))'''
 
         '''print(str(self.off_rating_column))
         print(str(self.def_rating_column))
@@ -488,14 +489,16 @@ class Team:
         print(str(self.FG_attempts_column))
         print(str(self.FG_percent_column))'''
 
-        pre_transposed = np.array([self.srs_column, self.off_rating_column, self.def_rating_column, self.rebound_diff_column, self.three_point_attempts_column, self.three_point_percent_column, self.FG_attempts_column, self.FG_percent_column])
+        #pre_transposed = np.array([self.opp_sos_column, self.off_rating_column, self.def_rating_column, self.rebound_diff_column, self.three_point_attempts_column, self.three_point_percent_column, self.FG_attempts_column, self.FG_percent_column])
+        pre_transposed = np.array([self.off_rating_column, self.off_efg_percent_column, self.off_tov_percent_column, self.off_orb_percent_column, self.off_ft_per_fga_column, self.opp_sos_column, self.opp_sos_column])
+
 
         #pre_transposed = np.array([self.srs_column, self.FGs_column, self.FG_attempts_column, self.FG_percent_column, self.three_points_column, self.three_point_attempts_column, self.three_point_percent_column, self.FTs_column, self.FT_attempts_column, self.FT_percent_column, self.off_rebounds_column, self.def_rebounds_column, self.total_rebounds_column, self.rebound_diff_column, self.assists_column, self.steals_column, self.blocks_column, self.turnovers_column, self.PFs_column, self.opp_FGs_column, self.opp_FG_attempts_column, self.opp_FG_percent_column, self.opp_3Ps_column, self.opp_3P_attempts_column, self.opp_3P_percent_column, self.opp_FTs_column, self.opp_FT_attempts_column, self.opp_FT_percent_column, self.opp_off_rebounds_column, self.opp_def_rebounds_column, self.opp_total_rebounds_column, self.opp_rebound_diff_column, self.opp_assists_column, self.opp_steals_column, self.opp_blocks_column, self.opp_turnovers_column, self.opp_PFs_column, self.off_rating_column, self.def_rating_column, self.pace_column, self.FT_attempt_rate_column, self.three_point_attempt_rate_column, self.true_shooting_percent_column, self.total_rebound_percent_column, self.assist_percent_column, self.steal_percent_column, self.block_percent_column, self.off_efg_percent_column, self.off_tov_percent_column, self.off_orb_percent_column, self.off_ft_per_fga_column, self.opp_efg_percent_column, self.opp_tov_percent_column, self.opp_drb_percent_column, self.opp_ft_per_fga_column])
 
         self.__input_training_matrix = pre_transposed.transpose()
-
-        print(self.__input_training_matrix)
-        print()
+        
+        #print(self.__input_training_matrix)
+        #print()
 
         # Create output training array
         self.__output_training_array = self.points_column
@@ -512,11 +515,13 @@ class Team:
         self.__regression_model.fit(self.__input_training_matrix, self.__output_training_array)
         self.coefficient_of_determination = self.__regression_model.score(self.__input_training_matrix, self.__output_training_array)
 
-    def predict_score(self, opp_srs, opp_fgs, opp_fg_attempts, opp_fg_percent, opp_3p, opp_3p_attempts, opp_3p_percent, opp_ft, opp_ft_attempts, opp_ft_percent, opp_off_rebounds, opp_def_rebounds, opp_total_rebounds, opp_rebound_diff, opp_assists, opp_steals, opp_blocks, opp_turnovers, opp_pfs):
+    def predict_score(self, opp_sos, opp_srs, opp_fgs, opp_fg_attempts, opp_fg_percent, opp_3p, opp_3p_attempts, opp_3p_percent, opp_ft, opp_ft_attempts, opp_ft_percent, opp_off_rebounds, opp_def_rebounds, opp_total_rebounds, opp_rebound_diff, opp_assists, opp_steals, opp_blocks, opp_turnovers, opp_pfs):
         
         # Create input prediction array
-        self.__prediction_input_array = np.array([opp_srs, self.current_off_rating, self.current_def_rating, self.avg_rebound_diff, self.avg_3P_attempts, self.avg_3P_percent, self.avg_FG_attempts, self.avg_FG_percent]).reshape((-1, 8))
-        print(self.__prediction_input_array)
+        #self.__prediction_input_array = np.array([opp_sos, self.current_off_rating, self.current_def_rating, self.avg_rebound_diff, self.avg_3P_attempts, self.avg_3P_percent, self.avg_FG_attempts, self.avg_FG_percent]).reshape((-1, 8))
+        #print(self.__prediction_input_array)
+
+        self.__prediction_input_array = np.array([self.current_off_rating, self.avg_off_efg_percent, self.avg_off_tov_percent, self.avg_off_orb_percent, self.avg_off_ft_per_fga_percent, opp_sos, opp_sos]).reshape((-1, 7))
 
         #self.__prediction_input_array = np.array([self.avg_FGs, self.avg_FG_attempts, self.avg_FG_percent, self.avg_3Ps, self.avg_3P_attempts, self.avg_3P_percent, self.avg_FTs, self.avg_FT_attempts, self.avg_FT_percent, self.avg_off_rebounds, self.avg_def_rebounds, self.avg_total_rebounds, self.avg_rebound_diff, self.avg_assists, self.avg_steals, self.avg_blocks, self.avg_turnovers, self.avg_PFs, self.opp_avg_FGs, self.opp_avg_FG_attempts, self.opp_avg_FG_percent, self.opp_avg_3Ps, self.opp_avg_3P_attempts, self.opp_avg_3P_percent, self.opp_avg_FTs, self.opp_avg_FT_attempts, self.opp_avg_FT_percent, self.opp_avg_off_rebounds, self.opp_avg_def_rebounds, self.opp_avg_total_rebounds, self.opp_avg_rebound_diff, self.opp_avg_assists, self.opp_avg_steals, self.opp_avg_blocks, self.opp_avg_turnovers, self.opp_avg_PFs, self.current_off_rating, self.current_def_rating, self.avg_pace, self.avg_ft_attempt_rate, self.avg_3P_attempt_rate, self.avg_true_shooting_percent, self.avg_total_rebound_percent, self.avg_assist_percent, self.avg_steal_percent, self.avg_block_percent, self.avg_off_efg_percent, self.avg_off_tov_percent, self.avg_off_orb_percent, self.avg_off_ft_per_fga_percent, self.avg_def_efg_percent, self.avg_def_tov_percent, self.avg_def_drb_percent, self.avg_def_ft_per_fga_percent]).reshape((-1, 54))
 

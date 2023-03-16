@@ -2,6 +2,13 @@ import requests
 import time
 from bs4 import BeautifulSoup
 
+
+
+
+
+
+
+
 def osu():
     url='https://www.sports-reference.com/cbb/schools/ohio-state/men/2023.html#all_per_game_players'
     response = requests.get(url)
@@ -134,4 +141,5 @@ for i, item in enumerate(basicTable.contents[7].contents):
         print("Child " + str(i) + ":")
         print(item)
         print()
+
 
